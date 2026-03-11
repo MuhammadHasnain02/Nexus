@@ -79,3 +79,27 @@ export interface AuthContextType {
   isAuthenticated: boolean;
   isLoading: boolean;
 }
+
+// ---------- new ----------
+
+export interface Meeting {
+  id: string;
+  title: string;
+  entrepreneurName: string;
+  investorName: string;
+  startTime: string;
+  endTime: string;
+  status: 'pending' | 'accepted' | 'declined';
+  isInvestorJoined: boolean;
+}
+
+// export interface Document {
+//   id: string;
+//   name: string;
+//   type: string;
+//   status: 'Draft' | 'In Review' | 'Signed';
+//   uploadedBy: string;
+//   date: string;
+//   fileUrl?: string;
+//   signatureImage?: string;
+// }

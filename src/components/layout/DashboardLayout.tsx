@@ -1,11 +1,11 @@
 import React from 'react';
 import { Outlet, Navigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../hooks/useAuth.ts';
 import { Navbar } from './Navbar';
 import { Sidebar } from './Sidebar';
-
+ 
 export const DashboardLayout: React.FC = () => {
-  const { user, isAuthenticated, isLoading } = useAuth();
+  const { /*user, */ isAuthenticated, isLoading } = useAuth();
   
   if (isLoading) {
     return (

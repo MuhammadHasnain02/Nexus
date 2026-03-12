@@ -5,7 +5,7 @@ import { Avatar } from '../../components/ui/Avatar';
 import { Button } from '../../components/ui/Button';
 import { Card, CardBody, CardHeader } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../hooks/useAuth.ts';
 import { findUserById } from '../../data/users';
 import { Investor } from '../../types';
 

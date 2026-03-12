@@ -12,7 +12,7 @@ export const MeetingHub: React.FC = () => {
 
   const handleJoin = (id: string) => {
     joinMeeting(id); // Context ke zariye signal bhejein
-    navigate(`/meeting_room/meeting/${id}`);
+    navigate(`/investors/meeting_room/meeting/${id}`);
   };
 
   return (
@@ -57,13 +57,13 @@ export const MeetingHub: React.FC = () => {
 
                     {/* ✅ ONLY SHOW BUTTON IF ACCEPTED */}
                     {meeting.status === 'accepted' ? (
-                      <Link to={`/meeting_room/meeting/${meeting.id}`}>
+                      // <Link to={`/investors/meeting_room/meeting/${meeting.id}`}>
                         <Button variant="primary" size="sm" onClick={() => handleJoin(meeting.id)}
                           className="flex items-center gap-2 bg-green-600 hover:bg-green-700">
                           <Video size={16} />
                           Join Call
                         </Button>
-                      </Link>
+                      // {/* </Link> */}
                     ) : (
                       <div className="text-xs text-gray-400 italic">
                         {meeting.status === 'pending' ? 'Waiting for approval' : 'Meeting cancelled'}

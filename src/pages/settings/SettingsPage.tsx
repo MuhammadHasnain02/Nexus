@@ -5,7 +5,7 @@ import { Input } from '../../components/ui/Input';
 import { Button } from '../../components/ui/Button';
 import { Badge } from '../../components/ui/Badge';
 import { Avatar } from '../../components/ui/Avatar';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../hooks/useAuth.ts';
 
 export const SettingsPage: React.FC = () => {
   const { user } = useAuth();

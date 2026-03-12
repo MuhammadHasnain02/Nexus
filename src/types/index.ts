@@ -78,9 +78,14 @@ export interface AuthContextType {
   updateProfile: (userId: string, updates: Partial<User>) => Promise<void>;
   isAuthenticated: boolean;
   isLoading: boolean;
+
+  pendingUser: User | null;
+  verify2FA: (otp: string) => Promise<void>;
 }
 
 // ---------- new ----------
+
+// ---------- Meeting Context Type ----------
 
 export interface Meeting {
   id: string;
@@ -93,13 +98,51 @@ export interface Meeting {
   isInvestorJoined: boolean;
 }
 
-// export interface Document {
-//   id: string;
-//   name: string;
-//   type: string;
-//   status: 'Draft' | 'In Review' | 'Signed';
-//   uploadedBy: string;
-//   date: string;
-//   fileUrl?: string;
-//   signatureImage?: string;
-// }
+export interface MeetingContextType {
+  meetings: Meeting[];
+  bookMeeting: (meeting: Omit<Meeting, 'id' | 'status'>) => void;
+  updateMeetingStatus: (id: string, status: 'accepted' | 'declined') => void;
+  joinMeeting: (id: string) => void;
+}
+
+// ---------- Document Context Type ----------
+
+export interface DocumentContextType {
+  documents: Document[];
+  uploadDocument: (file: File, role: string) => void;
+  deleteDocument: (id: string) => void;
+  signDocument: (id: string, signatureData: string) => void;
+}
+
+// ---------- Payment Context Type ----------
+
+export interface Transaction {
+  id: string;
+  amount: number;
+  sender: string;
+  receiver: string;
+  type: 'Deposit' | 'Withdraw' | 'Funding';
+  status: 'Completed' | 'Pending';
+  date: string;
+}
+
+export interface Bill {
+  id: string;
+  title: string;
+  amount: number;
+  status: 'Unpaid' | 'Paid';
+  date: string;
+}
+
+export interface PaymentContextType {
+  investorBalance: number;
+  entrepreneurBalance: number;
+  transactions: Transaction[];
+  bills: Bill[];
+  // Actions
+  deposit: (amount: number, role: 'investor' | 'entrepreneur') => void;
+  withdraw: (amount: number, role: 'investor' | 'entrepreneur') => void;
+  createBill: (amount: number, title: string) => void;
+  payBill: (billId: string) => void;
+}
+

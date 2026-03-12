@@ -1,12 +1,12 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { Meeting } from '../types';
+import { Meeting, MeetingContextType } from '../types';
 
-interface MeetingContextType {
-  meetings: Meeting[];
-  bookMeeting: (meeting: Omit<Meeting, 'id' | 'status'>) => void;
-  updateMeetingStatus: (id: string, status: 'accepted' | 'declined') => void;
-  joinMeeting: (id: string) => void;
-}
+// interface MeetingContextType {
+//   meetings: Meeting[];
+//   bookMeeting: (meeting: Omit<Meeting, 'id' | 'status'>) => void;
+//   updateMeetingStatus: (id: string, status: 'accepted' | 'declined') => void;
+//   joinMeeting: (id: string) => void;
+// }
 
 const MeetingContext = createContext<MeetingContextType | undefined>(undefined);
 

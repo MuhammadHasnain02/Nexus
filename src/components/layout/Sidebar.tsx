@@ -1,12 +1,13 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../hooks/useAuth.ts';
 import { 
   Home, Building2, CircleDollarSign, Users, MessageCircle, 
   Bell, FileText, Settings, HelpCircle,
   CalendarDays, TrendingUp,
   VideoIcon,
-  FolderClosed
+  FolderClosed,
+  CreditCard
 } from 'lucide-react';
 
 interface SidebarItemProps {
@@ -41,26 +42,28 @@ export const Sidebar: React.FC = () => {
   // Define sidebar items based on user role
   const entrepreneurItems = [
     { to: '/dashboard/entrepreneur', icon: <Home size={20} />, text: 'Dashboard' },
-    { to: '/profile/entrepreneur/' + user.id, icon: <Building2 size={20} />, text: 'My Startup' },
-    { to: '/investors', icon: <CircleDollarSign size={20} />, text: 'Find Investors' },
+    { to: '/dashboard/profile/entrepreneur/' + user.id, icon: <Building2 size={20} />, text: 'My Startup' },
+    { to: '/dashboard/investors', icon: <CircleDollarSign size={20} />, text: 'Find Investors' },
     { to: '/messages', icon: <MessageCircle size={20} />, text: 'Messages' },
     { to: '/notifications', icon: <Bell size={20} />, text: 'Notifications' },
     { to: '/documents', icon: <FileText size={20} />, text: 'Documents' },
-    { to: '/scheduler', icon: <CalendarDays size={20} />, text: 'Scheduler' },
-    { to: '/founder_meetings', icon: <VideoIcon size={20} />, text: 'Meeting Details' },
+    { to: '/entrepreneurs/scheduler', icon: <CalendarDays size={20} />, text: 'Scheduler' },
+    { to: '/entrepreneurs/meetings', icon: <VideoIcon size={20} />, text: 'Meeting Details' },
     { to: '/entrepreneur/documents_chamber', icon: <FolderClosed size={20} />, text: 'Documents Chamber' },
+    { to: '/entrepreneurs/payments', icon: <CreditCard size={20} />, text: 'payments' },
   ];
   
   const investorItems = [
     { to: '/dashboard/investor', icon: <Home size={20} />, text: 'Dashboard' },
-    { to: '/profile/investor/' + user.id, icon: <CircleDollarSign size={20} />, text: 'My Portfolio' },
-    { to: '/entrepreneurs', icon: <Users size={20} />, text: 'Find Startups' },
+    { to: '/dashboard/profile/investor/' + user.id, icon: <CircleDollarSign size={20} />, text: 'My Portfolio' },
+    { to: '/dashboard/entrepreneurs', icon: <Users size={20} />, text: 'Find Startups' },
     { to: '/messages', icon: <MessageCircle size={20} />, text: 'Messages' },
     { to: '/notifications', icon: <Bell size={20} />, text: 'Notifications' },
-    { to: '/deals', icon: <FileText size={20} />, text: 'Deals' },
+    { to: '/dashboard/deals', icon: <FileText size={20} />, text: 'Deals' },
     { to: '/investors/meetings', icon: <TrendingUp size={20} />, text: 'Investor Meetings' },
-    { to: '/meeting_room', icon: <VideoIcon size={20} />, text: 'Video Calls' },
+    { to: '/investors/meeting_room', icon: <VideoIcon size={20} />, text: 'Video Calls' },
     { to: '/investor/documents_chamber', icon: <FolderClosed size={20} />, text: 'Documents Chamber' },
+    { to: '/investors/payments', icon: <FolderClosed size={20} />, text: 'payments' },
   ];
   
   const sidebarItems = user.role === 'entrepreneur' ? entrepreneurItems : investorItems;

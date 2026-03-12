@@ -142,13 +142,14 @@
 
 import React, { createContext, useState, ReactNode } from 'react';
 import { Document, initialDocuments } from '../data/documents'; // ✅ Data import kiya
+import { DocumentContextType } from '../types';
 
-interface DocumentContextType {
-  documents: Document[];
-  uploadDocument: (file: File, role: string) => void;
-  deleteDocument: (id: string) => void;
-  signDocument: (id: string, signatureData: string) => void;
-}
+// interface DocumentContextType {
+//   documents: Document[];
+//   uploadDocument: (file: File, role: string) => void;
+//   deleteDocument: (id: string) => void;
+//   signDocument: (id: string, signatureData: string) => void;
+// }
 
 // 1. Context create karein
 export const DocumentContext = createContext<DocumentContextType | undefined>(undefined);

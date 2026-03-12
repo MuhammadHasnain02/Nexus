@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { Menu, X, Bell, MessageCircle, User, LogOut, Building2, CircleDollarSign } from 'lucide-react';
+import React, { useRef, useState } from 'react';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
+import { Menu, X, Bell, MessageCircle, LogOut, Building2, CircleDollarSign, Home, Users, FileText, TrendingUp, VideoIcon, CreditCard, CalendarDays } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth.ts';
 import { Avatar } from '../ui/Avatar';
 import { Button } from '../ui/Button';
@@ -9,6 +9,10 @@ export const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  if (!user) return null;
   
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -18,44 +22,40 @@ export const Navbar: React.FC = () => {
     logout();
     navigate('/login');
   };
-  
-  // User dashboard route based on role
-  const dashboardRoute = user?.role === 'entrepreneur' 
-    ? '/dashboard/entrepreneur' 
-    : '/dashboard/investor';
-  
-  // User profile route based on role and ID
-  const profileRoute = user 
-    ? `/profile/${user.role}/${user.id}` 
-    : '/login';
-    
-  const navLinks = [
-    {
-      icon: user?.role === 'entrepreneur' ? <Building2 size={18} /> : <CircleDollarSign size={18} />,
-      text: 'Dashboard',
-      path: dashboardRoute,
-    },
-    {
-      icon: <MessageCircle size={18} />,
-      text: 'Messages',
-      path: user ? '/messages' : '/login',
-    },
-    {
-      icon: <Bell size={18} />,
-      text: 'Notifications',
-      path: user ? '/notifications' : '/login',
-    },
-    {
-      icon: <User size={18} />,
-      text: 'Profile',
-      path: profileRoute,
-    }
+
+  // Define sidebar items based on user role
+  const entrepreneurItems = [
+    { to: '/dashboard/entrepreneur', icon: <Home size={20} />, text: 'Dashboard' },
+    { to: '/dashboard/profile/entrepreneur/' + user.id, icon: <Building2 size={20} />, text: 'My Startup' },
+    { to: '/dashboard/investors', icon: <CircleDollarSign size={20} />, text: 'Find Investors' },
+    { to: '/dashboard/messages', icon: <MessageCircle size={20} />, text: 'Messages' },
+    { to: '/dashboard/notifications', icon: <Bell size={20} />, text: 'Notifications' },
+    { to: '/dashboard/scheduler', icon: <CalendarDays size={20} />, text: 'Scheduler' },
+    { to: '/dashboard/entrepreneurs/meeting_room', icon: <VideoIcon size={20} />, text: 'Meeting Details' },
+    { to: '/dashboard/entrepreneur/documents', icon: <FileText size={20} />, text: 'Documents' },
+    { to: '/dashboard/entrepreneurs/payments', icon: <CreditCard size={20} />, text: 'payments' },
   ];
+  
+  const investorItems = [
+    { to: '/dashboard/investor', icon: <Home size={20} />, text: 'Dashboard' },
+    { to: '/dashboard/profile/investor/' + user.id, icon: <CircleDollarSign size={20} />, text: 'My Portfolio' },
+    { to: '/dashboard/entrepreneurs/startups', icon: <Users size={20} />, text: 'Find Startups' },
+    { to: '/dashboard/messages', icon: <MessageCircle size={20} />, text: 'Messages' },
+    { to: '/dashboard/notifications', icon: <Bell size={20} />, text: 'Notifications' },
+    { to: '/dashboard/deals', icon: <FileText size={20} />, text: 'Deals' },
+    { to: '/dashboard/meetings', icon: <TrendingUp size={20} />, text: 'Investor Meetings' },
+    { to: '/dashboard/investors/meeting_room', icon: <VideoIcon size={20} />, text: 'Video Calls' },
+    { to: '/dashboard/investor/documents', icon: <FileText size={20} />, text: 'Documents' },
+    { to: '/dashboard/investors/payments', icon: <CreditCard size={20} />, text: 'payments' },
+  ];
+
+  const navLinks = user?.role === 'entrepreneur' ? entrepreneurItems : investorItems;
   
   return (
     <nav className="bg-white shadow-md">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-5">
         <div className="flex justify-between h-16">
+          
           {/* Logo and brand */}
           <div className="flex-shrink-0 flex items-center">
             <Link to="/" className="flex items-center space-x-2">
@@ -69,49 +69,64 @@ export const Navbar: React.FC = () => {
             </Link>
           </div>
           
-          {/* Desktop navigation */}
-          <div className="hidden md:flex md:items-center md:ml-6">
-            {user ? (
-              <div className="flex items-center space-x-4">
-                {navLinks.map((link, index) => (
-                  <Link
-                    key={index}
-                    to={link.path}
-                    className="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-md transition-colors duration-200"
-                  >
-                    <span className="mr-2">{link.icon}</span>
-                    {link.text}
-                  </Link>
-                ))}
-                
-                <Button 
-                  variant="ghost"
-                  onClick={handleLogout}
-                  leftIcon={<LogOut size={18} />}
+          {/* Desktop navigation (Scrollable Area) */}
+          <div className="hidden md:flex md:items-center md:ml-5 lg:ml-8 flex-1 overflow-hidden relative group">
+            
+            {user && (
+              <div className="hidden md:flex flex-1 overflow-hidden relative group">
+                <div 
+                  ref={scrollRef}
+                  className="flex space-x-1 overflow-x-auto no-scrollbar scroll-smooth items-center py-2 px-2"
+                  style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                 >
-                  Logout
-                </Button>
-                
-                <Link to={profileRoute} className="flex items-center space-x-2 ml-2">
-                  <Avatar
-                    src={user.avatarUrl}
-                    alt={user.name}
-                    size="sm"
-                    status={user.isOnline ? 'online' : 'offline'}
-                  />
-                  <span className="text-sm font-medium text-gray-700">{user.name}</span>
-                </Link>
-              </div>
-            ) : (
-              <div className="flex items-center space-x-4">
-                <Link to="/login">
-                  <Button variant="outline">Log in</Button>
-                </Link>
-                <Link to="/register">
-                  <Button>Sign up</Button>
-                </Link>
+                  {navLinks.map((item, index) => {
+                    const isActive = location.pathname === item.to;
+                    return (
+                      <Link
+                        key={index}
+                        to={item.to}
+                        className={`flex items-center px-3 py-1.5 rounded-full whitespace-nowrap text-sm font-medium transition-all duration-200 ${
+                          isActive 
+                            ? 'bg-indigo-50 text-indigo-700 shadow-sm border border-indigo-100' 
+                            : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                        }`}
+                      >
+                        <span className="mr-2 opacity-80">{item.icon}</span>
+                        {item.text}
+                      </Link>
+                    );
+                  })}
+                </div>
               </div>
             )}
+
+          </div>
+
+          {/* Right Section: User Info & Logout */}
+          <div className="hidden md:flex items-center space-x-4 ml-4">
+            
+            {user ? (
+              <>
+                <div className="h-8 w-px bg-gray-200 mx-2" />
+                <Link to={`/dashboard/profile/${user.role}/${user.id}`} className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
+                  <Avatar src={user.avatarUrl} alt={user.name} size="sm" status={user.isOnline ? 'online' : 'offline'} />
+                  <span className="text-sm font-semibold text-gray-700 truncate max-w-[100px]">{user.name.split(' ')[0]}</span>
+                </Link>
+                <button 
+                  onClick={handleLogout}
+                  className="p-2 text-gray-500 hover:text-red-600 transition-colors"
+                  title="Logout"
+                >
+                  <LogOut size={20} />
+                </button>
+              </>
+            ) : (
+              <div className="flex space-x-2">
+                <Link to="/login"><Button variant="ghost" size="sm">Log in</Button></Link>
+                <Link to="/register"><Button size="sm">Get Started</Button></Link>
+              </div>
+            )}
+
           </div>
           
           {/* Mobile menu button */}
@@ -127,6 +142,7 @@ export const Navbar: React.FC = () => {
               )}
             </button>
           </div>
+          
         </div>
       </div>
       

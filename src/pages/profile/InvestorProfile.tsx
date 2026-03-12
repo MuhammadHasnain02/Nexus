@@ -65,7 +65,7 @@ export const InvestorProfile: React.FC = () => {
           
           <div className="mt-6 sm:mt-0 flex flex-col sm:flex-row gap-2 justify-center sm:justify-end">
             {!isCurrentUser && (
-              <Link to={`/chat/${investor.id}`}>
+              <Link to={`/dashboard/chat/${investor.id}`}>
                 <Button
                   leftIcon={<MessageCircle size={18} />}
                 >

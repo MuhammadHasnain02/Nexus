@@ -1,30 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { Users, Bell, Calendar, TrendingUp, AlertCircle, PlusCircle } from 'lucide-react';
+import { Users, Bell, Calendar, TrendingUp, PlusCircle } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
 import { Card, CardBody, CardHeader } from '../../components/ui/Card';
-import { Badge } from '../../components/ui/Badge';
-import { CollaborationRequestCard } from '../../components/collaboration/CollaborationRequestCard';
+// import { Badge } from '../../components/ui/Badge';
+// import { CollaborationRequestCard } from '../../components/collaboration/CollaborationRequestCard';
 import { InvestorCard } from '../../components/investor/InvestorCard';
 import { useAuth } from '../../hooks/useAuth.ts';
-import { CollaborationRequest } from '../../types';
-import { getRequestsForEntrepreneur } from '../../data/collaborationRequests';
+// import { CollaborationRequest } from '../../types';
+// import { getRequestsForEntrepreneur } from '../../data/collaborationRequests';
 import { investors } from '../../data/users';
 import { useMeetings } from '../../context/MeetingContext';
 
 export const EntrepreneurDashboard: React.FC = () => {
   const { user } = useAuth();
-  const [collaborationRequests, setCollaborationRequests] = useState<CollaborationRequest[]>([]);
-  const [recommendedInvestors, setRecommendedInvestors] = useState(investors.slice(0, 3));
   const { meetings } = useMeetings();
+  // const [collaborationRequests, setCollaborationRequests] = useState<CollaborationRequest[]>([]);
+  // const [recommendedInvestors, setRecommendedInvestors] = useState(investors.slice(0, 3));
   
-  useEffect(() => {
-    if (user) {
-      // Load collaboration requests
-      const requests = getRequestsForEntrepreneur(user.id);
-      setCollaborationRequests(requests);
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (user) {
+  //     // Load collaboration requests
+  //     const requests = getRequestsForEntrepreneur(user.id);
+  //     // setCollaborationRequests(requests);
+  //   }
+  // }, [user]);
 
   // const confirmedMeetings = meetings.filter(
   //   (m) => m.status === 'accepted' && m.entrepreneurName === 'Sarah Johnson'
@@ -39,7 +39,7 @@ export const EntrepreneurDashboard: React.FC = () => {
 
   if (!user) return null;
 
-  const pendingRequests = collaborationRequests.filter(req => req.status === 'pending');
+  // const pendingRequests = collaborationRequests.filter(req => req.status === 'pending');
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -161,6 +161,7 @@ export const EntrepreneurDashboard: React.FC = () => {
         <div className="lg:col-span-2 space-y-4">
           {allCollaborationRequests.map(request => (
             <div key={request.id} className="p-4 border border-gray-100 rounded-xl bg-white flex items-center justify-between shadow-sm">
+              
               <div className="flex items-center gap-4">
                 <div className={`p-2 rounded-lg ${request.status === 'accepted' ? 'bg-green-100 text-green-600' : 'bg-orange-100 text-orange-600'}`}>
                   <Calendar size={20} />
@@ -189,6 +190,7 @@ export const EntrepreneurDashboard: React.FC = () => {
                   {new Date(request.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </p>
               </div>
+
             </div>
           ))}
         </div>
@@ -204,7 +206,7 @@ export const EntrepreneurDashboard: React.FC = () => {
             </CardHeader>
             
             <CardBody className="space-y-4">
-              {recommendedInvestors.slice(0 , 2).map(investor => (
+              {investors.slice(0 , 2).map(investor => (
                 <InvestorCard
                   key={investor.id}
                   investor={investor}

@@ -39,7 +39,7 @@ export const CollaborationRequestCard: React.FC<CollaborationRequestCardProps> =
   };
   
   const handleMessage = () => {
-    navigate(`/chat/${investor.id}`);
+    navigate(`/dashboard/chat/${investor.id}`);
   };
   
   const handleViewProfile = () => {

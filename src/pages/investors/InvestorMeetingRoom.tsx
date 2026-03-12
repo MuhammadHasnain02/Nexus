@@ -247,7 +247,7 @@ import { useWebRTC } from '../../hooks/useWebRTC';
 import { Mic, MicOff, Video, VideoOff, PhoneOff, Monitor } from 'lucide-react';
 
 export const InvestorMeetingRoom: React.FC = () => {
-  const { meetingId } = useParams();
+  // const { meetingId } = useParams();
   const navigate = useNavigate();
   const { localVideoRef, stream, error } = useWebRTC();
   const [isMicOn, setIsMicOn] = React.useState(true);
@@ -286,7 +286,7 @@ export const InvestorMeetingRoom: React.FC = () => {
         <button onClick={toggleMic} className={`p-4 rounded-xl ${isMicOn ? 'bg-slate-800' : 'bg-red-500 text-white'}`}><Mic size={20}/></button>
         <button onClick={toggleVideo} className={`p-4 rounded-xl ${isVideoOn ? 'bg-slate-800' : 'bg-red-500 text-white'}`}><Video size={20}/></button>
         <button className="p-4 bg-slate-800 rounded-xl text-white"><Monitor size={20}/></button>
-        <button onClick={() => navigate('/investors/meeting_room')} className="p-4 bg-red-600 text-white rounded-xl"><PhoneOff size={20}/></button>
+        <button onClick={() => navigate('/dashboard/investors/meeting_room')} className="p-4 bg-red-600 text-white rounded-xl"><PhoneOff size={20}/></button>
       </div>
     </div>
   );

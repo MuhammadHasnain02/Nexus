@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Users, PieChart, Filter, Search, PlusCircle, Calendar, Bell, TrendingUp, Clock, CheckCircle2, ChevronRight, Video } from 'lucide-react';
+import { Users, Filter, Search, PlusCircle, Calendar, Bell, TrendingUp, ChevronRight, Video } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
 import { Card, CardBody, CardHeader } from '../../components/ui/Card';
 import { Input } from '../../components/ui/Input';
@@ -9,7 +9,7 @@ import { EntrepreneurCard } from '../../components/entrepreneur/EntrepreneurCard
 import { useAuth } from '../../hooks/useAuth.ts';
 // import { Entrepreneur } from '../../types';
 import { entrepreneurs } from '../../data/users';
-import { getRequestsFromInvestor } from '../../data/collaborationRequests';
+// import { getRequestsFromInvestor } from '../../data/collaborationRequests';
 import { useMeetings } from '../../context/MeetingContext';
 
 export const InvestorDashboard: React.FC = () => {
@@ -26,8 +26,8 @@ export const InvestorDashboard: React.FC = () => {
   );
 
   // Get collaboration requests sent by this investor
-  const sentRequests = getRequestsFromInvestor(user.id);
-  const requestedEntrepreneurIds = sentRequests.map(req => req.entrepreneurId);
+  // const sentRequests = getRequestsFromInvestor(user.id);
+  // const requestedEntrepreneurIds = sentRequests.map(req => req.entrepreneurId);
 
   // Filter entrepreneurs based on search and industry filters
   const filteredEntrepreneurs = entrepreneurs.filter(entrepreneur => {
@@ -96,7 +96,7 @@ export const InvestorDashboard: React.FC = () => {
             <span className="text-sm font-medium text-gray-700">Filter by:</span>
             
             <div className="flex flex-wrap gap-2">
-              {industries.map(industry => (
+              {industries.map((industry) => (
                 <Badge
                   key={industry}
                   variant={selectedIndustries.includes(industry) ? 'primary' : 'gray'}
@@ -276,7 +276,7 @@ export const InvestorDashboard: React.FC = () => {
 
                   {/* ✅ Join Call Button: Only shows if status is 'accepted' */}
                   {request.status === 'accepted' && (
-                    <Link to={`/meeting/${request.id}`}>
+                    <Link to={`/dashboard/investors/meeting_room/meeting/${request.id}`}>
                       <Button 
                         variant="primary" 
                         size="sm" 

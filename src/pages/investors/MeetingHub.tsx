@@ -12,7 +12,7 @@ export const MeetingHub: React.FC = () => {
 
   const handleJoin = (id: string) => {
     joinMeeting(id); // Context ke zariye signal bhejein
-    navigate(`/investors/meeting_room/meeting/${id}`);
+    navigate(`/dashboard/investors/meeting_room/meeting/${id}`);
   };
 
   return (

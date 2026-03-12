@@ -49,7 +49,7 @@ export const EntrepreneurMeetingRoom: React.FC = () => {
         <button onClick={() => setIsVideoOn(!isVideoOn)} className={`p-5 rounded-2xl transition-all ${isVideoOn ? 'bg-slate-800 text-slate-300' : 'bg-red-500 text-white'}`}>
           {isVideoOn ? <Video size={24}/> : <VideoOff size={24}/>}
         </button>
-        <button onClick={() => navigate('/meetings')} className="p-5 bg-red-600 text-white rounded-2xl hover:bg-red-700 transition-colors shadow-lg shadow-red-900/20">
+        <button onClick={() => navigate('/dashboard/entrepreneurs/meeting_room')} className="p-5 bg-red-600 text-white rounded-2xl hover:bg-red-700 transition-colors shadow-lg shadow-red-900/20">
           <PhoneOff size={24}/>
         </button>
       </div>

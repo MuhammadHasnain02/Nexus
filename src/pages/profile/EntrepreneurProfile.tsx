@@ -93,7 +93,7 @@ export const EntrepreneurProfile: React.FC = () => {
           <div className="mt-6 sm:mt-0 flex flex-col sm:flex-row gap-2 justify-center sm:justify-end">
             {!isCurrentUser && (
               <>
-                <Link to={`/chat/${entrepreneur.id}`}>
+                <Link to={`/dashboard/chat/${entrepreneur.id}`}>
                   <Button
                     variant="outline"
                     leftIcon={<MessageCircle size={18} />}

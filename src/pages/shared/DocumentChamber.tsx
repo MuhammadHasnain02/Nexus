@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
-import { FileText, CheckCircle2, Clock, PenTool, Download, Eye, FileUp, Trash2, X, RotateCcw } from 'lucide-react';
+import { FileText, CheckCircle2, Clock, PenTool, Download, Eye, FileUp, Trash2, X, RotateCcw, Upload, Search } from 'lucide-react';
 import SignatureCanvas from 'react-signature-canvas';
-import { Card, CardBody } from '../../components/ui/Card';
+import { Card, CardBody, CardHeader } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Badge } from '../../components/ui/Badge';
 import { useDocuments } from '../../hooks/useDocument.ts';
@@ -52,14 +52,33 @@ export const DocumentChamber: React.FC<{ role: 'investor' | 'entrepreneur' }> = 
   };
 
   return (
-    <div className="p-6 space-y-6 animate-in fade-in duration-700">
+    <div className="p-4 space-y-6 animate-in fade-in duration-700">
 
       <div className="flex justify-between items-end border-b border-slate-100 pb-4">
+
         <div>
-          <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">Document Chamber</h1>
-          <p className="text-slate-500 text-sm mt-1 italic underline">Securely manage and execute your venture capital documents.</p>
+          <h1 className="text-[26px] font-bold text-gray-900">Documents</h1>
+          <p className="text-gray-600">Manage your startup's important files</p>
         </div>
+        <div className="flex items-center gap-3">
+          <div className="relative hidden sm:block">
+            <input 
+              type="text" 
+              placeholder="Search files..." 
+              className="pl-9 pr-4 py-2 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-600/60 transition-all w-64"
+            />
+            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
+          </div>
+          
+          <Button className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-[10px] flex items-center gap-2 shadow-sm shadow-indigo-200">
+            <Upload size={18} />
+            <span className="hidden sm:inline">Upload New</span>
+          </Button>
+        </div>
+
       </div>
+
+      
 
       {/* Drag & Drop Zone */}
       {role === 'entrepreneur' && (
@@ -90,9 +109,63 @@ export const DocumentChamber: React.FC<{ role: 'investor' | 'entrepreneur' }> = 
         <StatCard icon={<CheckCircle2 />} label="Signed Deals" value={documents.filter(doc => doc.status === 'Signed').length} color="green" />
       </div>
 
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+
+      {/* Storage info */}
+      <Card className="lg:col-span-1">
+        <CardHeader>
+          <h2 className="text-lg font-medium text-gray-900">Storage</h2>
+        </CardHeader>
+        <CardBody className="space-y-4">
+          <div className="space-y-2">
+            <div className="flex justify-between text-sm">
+              <span className="text-gray-600">Used</span>
+              <span className="font-medium text-gray-900">12.5 GB</span>
+            </div>
+            <div className="h-2 bg-gray-200 rounded-full">
+              <div className="h-2 bg-primary-600 rounded-full" style={{ width: '65%' }}></div>
+            </div>
+            <div className="flex justify-between text-sm">
+              <span className="text-gray-600">Available</span>
+              <span className="font-medium text-gray-900">7.5 GB</span>
+            </div>
+          </div>
+          
+          <div className="pt-4 border-t border-gray-200">
+            <h3 className="text-sm font-medium text-gray-900 mb-2">Quick Access</h3>
+            <div className="space-y-2">
+              <button className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-md">
+                Recent Files
+              </button>
+              <button className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-md">
+                Shared with Me
+              </button>
+              <button className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-md">
+                Starred
+              </button>
+              <button className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-md">
+                Trash
+              </button>
+            </div>
+          </div>
+        </CardBody>
+      </Card>
+
       {/* Documents List */}
-      <div className="space-y-3">
-        <h3 className="text-sm font-bold text-slate-400 uppercase tracking-widest px-1">Recent Documents</h3>
+      <div className="lg:col-span-3 space-y-3">
+        {/* <h3 className="text-sm font-bold text-slate-400 uppercase tracking-widest px-1">Recent Documents</h3> */}
+
+        <CardHeader className="flex justify-between items-center">
+          <h2 className="text-lg font-medium text-gray-900">All Documents</h2>
+          <div className="flex items-center gap-2">
+            <Button variant="outline" size="sm">
+              Sort by
+            </Button>
+            <Button variant="outline" size="sm">
+              Filter
+            </Button>
+          </div>
+        </CardHeader>
 
         {documents.map((doc) => (
           <Card key={doc.id} className="border-none shadow-sm hover:shadow-md transition-all border border-transparent hover:border-indigo-100">
@@ -147,6 +220,8 @@ export const DocumentChamber: React.FC<{ role: 'investor' | 'entrepreneur' }> = 
             </CardBody>
           </Card>
         ))}
+      </div>
+
       </div>
 
       {/* --- MODALS --- */}
@@ -214,8 +289,8 @@ const StatCard: React.FC<StatCardProps> = ({ icon, label, value, color }) => (
   <div className="bg-white p-5 rounded-2xl border border-slate-100 flex items-center gap-5 shadow-sm">
     <div className={`p-4 bg-${color}-50 text-${color}-600 rounded-xl`}>{icon}</div>
     <div>
-      <p className="text-[10px] uppercase tracking-wider font-bold text-slate-400">{label}</p>
-      <p className="font-black text-2xl text-slate-800">{value}</p>
+      <p className="text-[11px] uppercase tracking-wider font-bold text-slate-400">{label}</p>
+      <p className="font-bold text-[20px] text-slate-800">{value}</p>
     </div>
   </div>
 );

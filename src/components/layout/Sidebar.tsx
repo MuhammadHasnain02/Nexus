@@ -6,7 +6,7 @@ import {
   Bell, FileText, Settings, HelpCircle,
   CalendarDays, TrendingUp,
   VideoIcon,
-  FolderClosed,
+  // FolderClosed,
   CreditCard
 } from 'lucide-react';
 
@@ -44,34 +44,33 @@ export const Sidebar: React.FC = () => {
     { to: '/dashboard/entrepreneur', icon: <Home size={20} />, text: 'Dashboard' },
     { to: '/dashboard/profile/entrepreneur/' + user.id, icon: <Building2 size={20} />, text: 'My Startup' },
     { to: '/dashboard/investors', icon: <CircleDollarSign size={20} />, text: 'Find Investors' },
-    { to: '/messages', icon: <MessageCircle size={20} />, text: 'Messages' },
-    { to: '/notifications', icon: <Bell size={20} />, text: 'Notifications' },
-    { to: '/documents', icon: <FileText size={20} />, text: 'Documents' },
-    { to: '/entrepreneurs/scheduler', icon: <CalendarDays size={20} />, text: 'Scheduler' },
-    { to: '/entrepreneurs/meetings', icon: <VideoIcon size={20} />, text: 'Meeting Details' },
-    { to: '/entrepreneur/documents_chamber', icon: <FolderClosed size={20} />, text: 'Documents Chamber' },
-    { to: '/entrepreneurs/payments', icon: <CreditCard size={20} />, text: 'payments' },
+    { to: '/dashboard/messages', icon: <MessageCircle size={20} />, text: 'Messages' },
+    { to: '/dashboard/notifications', icon: <Bell size={20} />, text: 'Notifications' },
+    { to: '/dashboard/scheduler', icon: <CalendarDays size={20} />, text: 'Scheduler' },
+    { to: '/dashboard/entrepreneurs/meeting_room', icon: <VideoIcon size={20} />, text: 'Meeting Details' },
+    { to: '/dashboard/entrepreneur/documents', icon: <FileText size={20} />, text: 'Documents' },
+    { to: '/dashboard/entrepreneurs/payments', icon: <CreditCard size={20} />, text: 'payments' },
   ];
   
   const investorItems = [
     { to: '/dashboard/investor', icon: <Home size={20} />, text: 'Dashboard' },
     { to: '/dashboard/profile/investor/' + user.id, icon: <CircleDollarSign size={20} />, text: 'My Portfolio' },
-    { to: '/dashboard/entrepreneurs', icon: <Users size={20} />, text: 'Find Startups' },
-    { to: '/messages', icon: <MessageCircle size={20} />, text: 'Messages' },
-    { to: '/notifications', icon: <Bell size={20} />, text: 'Notifications' },
+    { to: '/dashboard/entrepreneurs/startups', icon: <Users size={20} />, text: 'Find Startups' },
+    { to: '/dashboard/messages', icon: <MessageCircle size={20} />, text: 'Messages' },
+    { to: '/dashboard/notifications', icon: <Bell size={20} />, text: 'Notifications' },
     { to: '/dashboard/deals', icon: <FileText size={20} />, text: 'Deals' },
-    { to: '/investors/meetings', icon: <TrendingUp size={20} />, text: 'Investor Meetings' },
-    { to: '/investors/meeting_room', icon: <VideoIcon size={20} />, text: 'Video Calls' },
-    { to: '/investor/documents_chamber', icon: <FolderClosed size={20} />, text: 'Documents Chamber' },
-    { to: '/investors/payments', icon: <FolderClosed size={20} />, text: 'payments' },
+    { to: '/dashboard/meetings', icon: <TrendingUp size={20} />, text: 'Investor Meetings' },
+    { to: '/dashboard/investors/meeting_room', icon: <VideoIcon size={20} />, text: 'Video Calls' },
+    { to: '/dashboard/investor/documents', icon: <FileText size={20} />, text: 'Documents' },
+    { to: '/dashboard/investors/payments', icon: <CreditCard size={20} />, text: 'payments' },
   ];
   
   const sidebarItems = user.role === 'entrepreneur' ? entrepreneurItems : investorItems;
   
   // Common items at the bottom
   const commonItems = [
-    { to: '/settings', icon: <Settings size={20} />, text: 'Settings' },
-    { to: '/help', icon: <HelpCircle size={20} />, text: 'Help & Support' },
+    { to: '/dashboard/settings', icon: <Settings size={20} />, text: 'Settings' },
+    { to: '/dashboard/help', icon: <HelpCircle size={20} />, text: 'Help & Support' },
   ];
   
   return (

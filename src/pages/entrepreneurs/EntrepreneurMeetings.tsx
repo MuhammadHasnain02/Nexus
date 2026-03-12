@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Video, Calendar, Clock, User, XCircle, Clock3 } from 'lucide-react';
 import { useMeetings } from '../../context/MeetingContext';
 import { Card, CardBody } from '../../components/ui/Card';
@@ -7,10 +7,13 @@ import { Badge } from '../../components/ui/Badge';
 import { Button } from '../../components/ui/Button';
 
 export const EntrepreneurMeetings: React.FC = () => {
-  const { meetings } = useMeetings();
+  const { meetings, joinMeeting } = useMeetings();
+  const navigate = useNavigate()
 
-  // Yahan hum sirf wo meetings dikhayenge jo is Entrepreneur se related hain
-  // (Filter logic aapke data structure ke mutabiq ho sakti hai)
+  const handleReceiveCall = (id: string) => {
+    joinMeeting(id);
+    navigate(`/dashboard/entrepreneurs/meeting_room/meeting/${id}`);
+  };
 
   return (
     <div className="p-6 space-y-6 animate-in fade-in duration-500">
@@ -76,19 +79,19 @@ export const EntrepreneurMeetings: React.FC = () => {
 
                         {/* ✅ ENABLE BUTTON ONLY IF STATUS IS 'ACCEPTED' */}
                         {meeting.status === 'accepted' ? (
-                          <Link 
-                            onClick={(e) => !isJoined && e.preventDefault()}
-                            to={`/founder_meetings/room/${meeting.id}`}
-                          >
+                          // <Link 
+                          //   onClick={(e) => !isJoined && e.preventDefault()}
+                          //   to={`/founder_meetings/room/${meeting.id}`}
+                          // >
                             
-                            <Button size="sm" disabled={!isJoined} 
+                            <Button size="sm" disabled={!isJoined} onClick={() => handleReceiveCall(meeting.id)}
                               // className="bg-indigo-600 hover:bg-indigo-700 flex items-center gap-2">
                               className={`${isJoined ? 'bg-indigo-600' : 'bg-slate-400 opacity-50 cursor-not-allowed'}`}>
                               <Video size={16} />
                                 {isJoined ? "Receive Call" : "Waiting for Investor..."}
                             </Button>
 
-                          </Link>
+                          // </Link>
                         ) : (
                           <div className="p-2 text-slate-400">
                             {meeting.status === 'pending' ? (

@@ -193,12 +193,10 @@ import { InvestorsPage } from './pages/investors/InvestorsPage';
 import { EntrepreneursPage } from './pages/entrepreneurs/EntrepreneursPage';
 import { MessagesPage } from './pages/messages/MessagesPage';
 import { NotificationsPage } from './pages/notifications/NotificationsPage';
-import { DocumentsPage } from './pages/documents/DocumentsPage';
 import { SchedulerPage } from './pages/entrepreneurs/scheduler/SchedulerPage';
 import { SettingsPage } from './pages/settings/SettingsPage';
 import { HelpPage } from './pages/help/HelpPage';
 import { DealsPage } from './pages/deals/DealsPage';
-// import { VideoMeeting } from './pages/video/VideoMeetingPage';
 import { EntrepreneurMeetings } from './pages/entrepreneurs/EntrepreneurMeetings';
 import { EntrepreneurMeetingRoom } from './pages/entrepreneurs/EntrepreneurMeetingRoom';
 
@@ -265,6 +263,59 @@ function App() {
                     } 
                   />
 
+                  <Route path="entrepreneurs">
+
+                    {/* Meeting Room & Hub */}
+                    <Route path="meeting_room">
+
+                      <Route 
+                        index 
+                        element={
+                          <ProtectedRoute allowedRoles={['entrepreneur']}>
+                            <EntrepreneurMeetings />
+                          </ProtectedRoute>
+                        } 
+                      />
+                      <Route 
+                        path="meeting/:meetingId" 
+                        element={
+                          <ProtectedRoute allowedRoles={['entrepreneur']}>
+                            <EntrepreneurMeetingRoom />
+                          </ProtectedRoute>
+                        } 
+                      />
+
+                    </Route>
+
+                  </Route>
+
+                  <Route 
+                    path="scheduler" 
+                    element={
+                      <ProtectedRoute allowedRoles={['entrepreneur']}>
+                        <SchedulerPage />
+                      </ProtectedRoute>
+                    } 
+                  />
+
+                  <Route 
+                    path="entrepreneurs/payments" 
+                    element={
+                      <ProtectedRoute allowedRoles={['entrepreneur']}>
+                        <PaymentHub role='entrepreneur' />
+                      </ProtectedRoute>
+                    } 
+                  />
+
+                  <Route 
+                    path="entrepreneur/documents" 
+                    element={
+                      <ProtectedRoute allowedRoles={['entrepreneur']}>
+                        <DocumentChamber role='entrepreneur' />
+                      </ProtectedRoute>
+                    } 
+                  />
+
                   {/* -------- 2. Investor Specific Pages -------- */}
 
                   <Route 
@@ -295,7 +346,7 @@ function App() {
                   />
 
                   <Route 
-                    path="entrepreneurs" 
+                    path="entrepreneurs/startups" 
                     element={
                       <ProtectedRoute allowedRoles={['investor']}>
                         <EntrepreneursPage />
@@ -303,54 +354,64 @@ function App() {
                     } 
                   />
 
-                </Route>
+                  <Route path="investors">
 
-                <Route path="/documents" element={<DashboardLayout />}>
-                  <Route index element={<DocumentsPage />} />
-                </Route>
+                    {/* Meeting Room & Hub */}
+                    <Route path="meeting_room">
 
-                <Route path="/entrepreneurs/scheduler" element={<DashboardLayout />}>
-                  <Route index element={<SchedulerPage />} />
-                </Route>
+                      <Route 
+                        index 
+                        element={
+                          <ProtectedRoute allowedRoles={['investor']}>
+                            <MeetingHub />
+                          </ProtectedRoute>
+                        } 
+                      />
+                      <Route 
+                        path="meeting/:meetingId" 
+                        element={
+                          <ProtectedRoute allowedRoles={['investor']}>
+                            <InvestorMeetingRoom />
+                          </ProtectedRoute>
+                        } 
+                      />
 
-                <Route path="/investors/meetings" element={<DashboardLayout />}>
-                  <Route index element={<InvestorMeetings />} />
-                </Route>
+                    </Route>
 
-                <Route path="/investors/meeting_room" element={<DashboardLayout />}>
-                  <Route index element={<MeetingHub />} /> 
-                  <Route path="meeting/:meetingId" element={<InvestorMeetingRoom />} />
-                </Route>
+                  </Route>
 
-                <Route path="/entrepreneurs/meetings" element={<DashboardLayout />}>
-                  <Route index element={<EntrepreneurMeetings />} />
-                  <Route path="room/:meetingId" element={<EntrepreneurMeetingRoom />} />
-                </Route>
+                  <Route 
+                    path="meetings" 
+                    element={
+                      <ProtectedRoute allowedRoles={['investor']}>
+                        <InvestorMeetings />
+                      </ProtectedRoute>
+                    } 
+                  />
 
-                <Route path="/documents_chamber" element={<DashboardLayout />}>
-                  <Route index element={<MeetingHub />} /> 
-                  <Route path="meeting/:meetingId" element={<InvestorMeetingRoom />} />
-                </Route>
+                  <Route 
+                    path="investors/payments" 
+                    element={
+                      <ProtectedRoute allowedRoles={['investor']}>
+                        <PaymentHub role='investor' />
+                      </ProtectedRoute>
+                    } 
+                  />
 
-                <Route path="/investor/documents_chamber" element={<DashboardLayout />} >
-                  <Route index element={<DocumentChamber role="investor" />} />
-                </Route>
+                  <Route 
+                    path="investor/documents" 
+                    element={
+                      <ProtectedRoute allowedRoles={['investor']}>
+                        <DocumentChamber role='investor' />
+                      </ProtectedRoute>
+                    } 
+                  />
 
-                <Route path="/entrepreneur/documents_chamber" element={<DashboardLayout />} >
-                  <Route index element={<DocumentChamber role="entrepreneur" />} />
-                </Route>
-
-                <Route path="/entrepreneurs/payments" element={<DashboardLayout />}>
-                  <Route index element={<PaymentHub role='entrepreneur' />} />
-                </Route>
-
-                <Route path="/investors/payments" element={<DashboardLayout />}>
-                  <Route index element={<PaymentHub role='investor' />} />
                 </Route>
 
                 {/* ========== Common Protected Routes ========== */}
 
-                <Route path="/messages" element={<DashboardLayout />}>
+                <Route path="/dashboard/messages" element={<DashboardLayout />}>
                   <Route 
                     index 
                     element={
@@ -361,7 +422,7 @@ function App() {
                   />
                 </Route>
 
-                <Route path="/notifications" element={<DashboardLayout />}>
+                <Route path="/dashboard/notifications" element={<DashboardLayout />}>
                   <Route 
                     index 
                     element={
@@ -372,7 +433,7 @@ function App() {
                   />
                 </Route>
 
-                <Route path="/chat" element={<DashboardLayout />}>
+                <Route path="/dashboard/chat" element={<DashboardLayout />}>
                   <Route 
                     index 
                     element={
@@ -387,7 +448,7 @@ function App() {
                   />
                 </Route>
 
-                <Route path="/settings" element={<DashboardLayout />}>
+                <Route path="/dashboard/settings" element={<DashboardLayout />}>
                   <Route 
                     index 
                     element={
@@ -398,7 +459,7 @@ function App() {
                   />
                 </Route>
 
-                <Route path="/help" element={<DashboardLayout />}>
+                <Route path="/dashboard/help" element={<DashboardLayout />}>
                   <Route 
                     index 
                     element={

@@ -19,7 +19,7 @@ export const ChatUserList: React.FC<ChatUserListProps> = ({ conversations }) => 
   if (!currentUser) return null;
   
   const handleSelectUser = (userId: string) => {
-    navigate(`/chat/${userId}`);
+    navigate(`/dashboard/chat/${userId}`);
   };
 
   return (

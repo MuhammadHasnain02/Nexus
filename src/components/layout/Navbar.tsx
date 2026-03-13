@@ -27,7 +27,7 @@ export const Navbar: React.FC = () => {
   const entrepreneurItems = [
     { to: '/dashboard/entrepreneur', icon: <Home size={20} />, text: 'Dashboard' },
     { to: '/dashboard/profile/entrepreneur/' + user.id, icon: <Building2 size={20} />, text: 'My Startup' },
-    { to: '/dashboard/investors', icon: <CircleDollarSign size={20} />, text: 'Find Investors' },
+    { to: '/dashboard', icon: <CircleDollarSign size={20} />, text: 'Find Investors' },
     { to: '/dashboard/messages', icon: <MessageCircle size={20} />, text: 'Messages' },
     { to: '/dashboard/notifications', icon: <Bell size={20} />, text: 'Notifications' },
     { to: '/dashboard/scheduler', icon: <CalendarDays size={20} />, text: 'Scheduler' },

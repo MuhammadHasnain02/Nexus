@@ -78,8 +78,6 @@ export const DocumentChamber: React.FC<{ role: 'investor' | 'entrepreneur' }> = 
 
       </div>
 
-      
-
       {/* Drag & Drop Zone */}
       {role === 'entrepreneur' && (
         <div
@@ -153,7 +151,6 @@ export const DocumentChamber: React.FC<{ role: 'investor' | 'entrepreneur' }> = 
 
       {/* Documents List */}
       <div className="lg:col-span-3 space-y-3">
-        {/* <h3 className="text-sm font-bold text-slate-400 uppercase tracking-widest px-1">Recent Documents</h3> */}
 
         <CardHeader className="flex justify-between items-center">
           <h2 className="text-lg font-medium text-gray-900">All Documents</h2>
@@ -173,7 +170,7 @@ export const DocumentChamber: React.FC<{ role: 'investor' | 'entrepreneur' }> = 
               <div className="flex items-center gap-4">
                 <div className="p-3 bg-slate-50 text-indigo-500 rounded-xl"><FileText size={24} /></div>
                 <div>
-                  <h3 className="font-bold text-slate-800">{doc.name}</h3>
+                  <h3 className="font-bold text-slate-800">{doc.name.length > 35 ? `${doc.name.slice(0, 35)}...` : doc.name}</h3>
                   <p className="text-[11px] text-slate-400 font-medium uppercase">{doc.type} • {doc.date} • BY {doc.uploadedBy}</p>
                 </div>
               </div>

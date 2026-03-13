@@ -245,7 +245,8 @@ import {
   ShieldCheck,
   FileText,
   CheckCircle2,
-  Clock
+  Clock,
+  CircleUser
 } from 'lucide-react';
 import { usePayment } from '../../hooks/usePayment'; // Ensure path is correct
 import { Button } from '../../components/ui/Button';
@@ -350,9 +351,21 @@ export const PaymentHub: React.FC<{ role: 'investor' | 'entrepreneur' }> = ({ ro
             
             <div className="mt-12 flex items-center gap-6">
               <div className="flex -space-x-3">
-                {[1,2,3].map(i => (
-                  <div key={i} className="w-10 h-10 rounded-full border-2 border-indigo-500 bg-slate-200" />
+              <div className="flex -space-x-3 overflow-hidden">
+                {[1, 2, 3].map((i) => (
+                  <div 
+                    key={i} 
+                    className="inline-block w-10 h-10 rounded-full border-2 border-white bg-slate-200 flex items-center justify-center shadow-sm"
+                    title={`User ${i}`}
+                  >
+                    <CircleUser size={28} className="text-slate-600" />
+                  </div>
                 ))}
+                
+                <div className="flex items-center justify-center w-10 h-10 rounded-full border-2 border-white bg-indigo-100 text-indigo-700 text-xs font-bold shadow-sm">
+                  +5
+                </div>
+              </div>
               </div>
               <p className="text-indigo-100 text-xs">Secured by industry-standard encryption.</p>
             </div>
